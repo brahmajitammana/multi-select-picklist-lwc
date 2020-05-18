@@ -1,0 +1,71 @@
+<!-- 
+Author : Brahmaji tammana
+Website: www.auraenabled.com 
+Description: Main component to display dropdown with picklist values 
+-->
+<template>
+
+    <div class="slds-form-element selectbox">
+        <label class="slds-form-element__label" for="combobox-id-5">{picklistlabel}</label>
+
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container slds-size_small">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+                    aria-expanded="true" aria-haspopup="listbox" role="combobox" onmouseleave={handleleave}>
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                        <input type="text"
+                            class="slds-input slds-combobox__input slds-has-focus slds-combobox__input-value"
+                            id="combobox-id-5" aria-controls="listbox-id-5" role="textbox"
+                            placeholder="Select an Option" readonly="" value={selectedmessage}
+                            onclick={handleShowdropdown} />
+                        <span
+                            class="slds-icon_container slds-icon-utility-down slds-input__icon slds-input__icon_right">
+                            <lightning-icon icon-name="utility:down" size="x-small" aria-hidden="true"
+                                alternative-text="drop-down" title="click to drop-down">
+                            </lightning-icon>
+                        </span>
+                    </div>
+
+                    <!-- Drop down section : Start -->
+                    <template if:true={showdropdown}>
+                        <div id="listbox-id-5" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                            role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+
+                                <template for:each={values} for:item="eachvalue">
+
+                                    <c-picklist-value key={eachvalue.label} label={eachvalue.label}
+                                        value={eachvalue.value} selected={eachvalue.selected}>
+                                    </c-picklist-value>
+
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
+                    <!-- Drop down section : Start -->
+                </div>
+            </div>
+            <!-- Selected Pills section : Start-->
+            <div class="slds-listbox_selection-group">
+                <ul class="slds-listbox slds-listbox_horizontal" role="listbox" aria-label="Selected Options:"
+                    aria-orientation="horizontal">
+                    <template for:each={selectedvalues} for:item="eachvalue">
+                        <li key={eachvalue} class="slds-listbox-item" role="presentation">
+                            <span class="slds-pill" role="option" tabindex="0" aria-selected="true">
+                                <span class="slds-pill__label" title={eachvalue}>{eachvalue}</span>
+                                <span class="slds-icon_container slds-pill__remove" title="Remove">
+                                    <lightning-icon icon-name="utility:close" size="x-small" aria-hidden="true"
+                                        alternative-text="Remove" title="Remove" onclick={closePill}
+                                        data-value={eachvalue}>
+                                    </lightning-icon>
+                                    <span class="slds-assistive-text">Click to remove</span>
+                                </span>
+                            </span>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+            <!-- Selected Pills section : End-->
+        </div>
+    </div>
+</template>
