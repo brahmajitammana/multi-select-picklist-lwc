@@ -3,13 +3,7 @@ import { LightningElement, track, api } from 'lwc';
 export default class App extends LightningElement {
 
     @api
-    values = [
-        {label : 'New', value : 'New', selected : false},
-        {label : 'In progress', value : 'In Progress', selected : false},
-        {label : 'Completed', value : 'Completed'},
-        {label : 'Canceled', value : 'Canceled'},
-        {label : 'Aborted', value : 'Aborted'}
-    ]
+    values = [];
 
     @track
     selectedvalues = [];
@@ -55,13 +49,18 @@ export default class App extends LightningElement {
 
     refreshOrginalList() {
         //update the original value array to shown after close
-        this.values.forEach((element, index) => {
+
+        const picklistvalues = this.values.map(eachvalue => ({...eachvalue}));
+
+        picklistvalues.forEach((element, index) => {
             if(this.selectedvalues.includes(element.value)){
-                this.values[index].selected = true;
+                picklistvalues[index].selected = true;
             }else{
-                this.values[index].selected = false;
+                picklistvalues[index].selected = false;
             }
         });
+
+        this.values = picklistvalues;
     }
 
     handleShowdropdown(){
